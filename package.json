@@ -23,5 +23,8 @@
   },
   "pkg": {
     "assets": "node_modules/**/*.*"
+  },
+  "engines": {
+    "node": "^14"
   }
 }
