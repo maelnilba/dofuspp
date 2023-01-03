@@ -22,6 +22,6 @@
     "typescript": "4.9.4"
   },
   "pkg": {
-    "assets": "node_modules/puppeteer-extra-plugin-stealth/**/*.*"
+    "assets": "node_modules/**/*.*"
   }
 }
