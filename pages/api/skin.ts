@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer-extra";
 import chrome from "chrome-aws-lambda";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import { Protocol } from "puppeteer";
-puppeteer.use(StealthPlugin());
+// import StealthPlugin from "puppeteer-extra-plugin-stealth";
+// import { Protocol } from "puppeteer";
+// puppeteer.use(StealthPlugin());
 
 const URL = "https://www.dofus.com/";
 
@@ -30,7 +30,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   );
   const page = await browser.newPage();
   await page.goto(url);
-  let content = await page.content();
   const backgroundImage = await page.evaluate(
     (el) => window.getComputedStyle(el).backgroundImage,
     await page.$(".ak-entitylook")
