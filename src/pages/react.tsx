@@ -2,6 +2,8 @@ import Head from "next/head";
 import hljs from "highlight.js";
 import { useEffect, useState } from "react";
 import { fetchAPI, jsxCode, typeAPI } from "../utils/reactExample";
+import { Inter } from "@next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 
 export default function ReactExample() {
   useEffect(() => {
@@ -12,15 +14,17 @@ export default function ReactExample() {
       <Head>
         <title>Dofus pp - React</title>
       </Head>
-      <div className="w-screen min-h-screen bg-black text-white flex flex-col py-10 items-center">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-extrabold">Implement with React</h1>
-          <h2>Make the API fetch</h2>
-          <Code code={fetchAPI} language="typescript" />
-          <h2>Type the result</h2>
-          <Code code={typeAPI} language="typescript" />
-          <h2>Display in JSX</h2>
-          <Code code={jsxCode} language="html" />
+      <div className={inter.className}>
+        <div className="w-screen min-h-screen bg-black text-white flex flex-col py-10 items-center">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-4xl font-extrabold">Implement with React</h1>
+            <h2>Make the API fetch</h2>
+            <Code code={fetchAPI} language="typescript" />
+            <h2>Type the result</h2>
+            <Code code={typeAPI} language="typescript" />
+            <h2>Display in JSX</h2>
+            <Code code={jsxCode} language="html" />
+          </div>
         </div>
       </div>
     </>
