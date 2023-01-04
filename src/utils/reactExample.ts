@@ -7,7 +7,7 @@ const json = await res.json()
 `;
 
 export const typeAPI = `
-type SkinImage = {
+interface SkinImage {
     src: string; // url from ankama website (protected)
     image: string; // base64 image
 };

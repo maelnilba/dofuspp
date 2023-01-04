@@ -84,7 +84,7 @@ export default function Home() {
                   </button>
                 </form>
               ) : (
-                <div className="flex items-center justify-center w-28 h-28 border border-gray-800 rounded-lg bg-black">
+                <div className="mt-4 flex items-center justify-center w-28 h-28 border shadow shadow-gray-900 border-gray-800 rounded-lg bg-black">
                   <div className="px-3 py-1 text-xs font-medium leading-none text-center text-white bg-gray-800 rounded-full animate-pulse">
                     loading...
                   </div>
