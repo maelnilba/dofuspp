@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { addExtra } from "puppeteer-extra";
 
-// Add the Imports before StealthPlugin
+// Add the Imports before StealthPlugin, this is only due to bug in Vercel
 require("puppeteer-extra-plugin-stealth/evasions/chrome.app");
 require("puppeteer-extra-plugin-stealth/evasions/chrome.csi");
 require("puppeteer-extra-plugin-stealth/evasions/chrome.loadTimes");
 require("puppeteer-extra-plugin-stealth/evasions/chrome.runtime");
-require("puppeteer-extra-plugin-stealth/evasions/defaultArgs"); // pkg warned me this one was missing
+require("puppeteer-extra-plugin-stealth/evasions/defaultArgs");
 require("puppeteer-extra-plugin-stealth/evasions/iframe.contentWindow");
 require("puppeteer-extra-plugin-stealth/evasions/media.codecs");
 require("puppeteer-extra-plugin-stealth/evasions/navigator.hardwareConcurrency");
@@ -21,6 +21,7 @@ require("puppeteer-extra-plugin-stealth/evasions/webgl.vendor");
 require("puppeteer-extra-plugin-stealth/evasions/window.outerdimensions");
 require("puppeteer-extra-plugin-user-preferences");
 require("puppeteer-extra-plugin-user-data-dir");
+//
 
 import chromium from "chrome-aws-lambda";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
@@ -56,9 +57,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const backgroundImageCleaned = backgroundImage.match(/url\("(.*)"/)?.[1];
 
+  let imageb64: string | null = null;
+  page.on("response", async (response: any) => {
+    const matches = /.*\.(jpg|png|svg|gif)$/.exec(response.url());
+    if (matches && matches.length === 2) {
+      const buffer = await response.buffer();
+      imageb64 = buffer.toString("base64");
+    }
+  });
+  await page.goto(backgroundImageCleaned, { waitUntil: "networkidle2" });
   await browser.close();
 
   res.status(200).json({
-    image: backgroundImageCleaned,
+    src: backgroundImageCleaned,
+    image: imageb64,
   });
 };
