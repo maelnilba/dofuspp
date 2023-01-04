@@ -68,6 +68,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   await page.goto(backgroundImageCleaned, { waitUntil: "networkidle2" });
   await browser.close();
 
+  res.setHeader("Cache-Control", "s-maxage=900, stale-while-revalidate");
   res.status(200).json({
     src: backgroundImageCleaned,
     image: imageb64,
