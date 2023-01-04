@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function ReactExample() {
   useEffect(() => {
     hljs.highlightAll();
-  });
+  }, []);
   return (
     <>
       <Head>
