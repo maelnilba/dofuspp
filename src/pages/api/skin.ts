@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { addExtra } from "puppeteer-extra";
+import Cors from "cors";
 
 // Add the Imports before StealthPlugin, this is only due to bug in Vercel
 require("puppeteer-extra-plugin-stealth/evasions/chrome.app");
@@ -30,7 +31,29 @@ puppeteerExtra.use(StealthPlugin());
 
 const URL = "https://www.dofus.com/";
 
+function initMiddleware(middleware: any) {
+  return (req: any, res: any) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result: any) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
+    });
+}
+
+const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors({
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ["OPTIONS"],
+  })
+);
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  await cors(req, res);
+
   const {
     query: { url },
   } = req;
